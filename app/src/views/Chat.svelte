@@ -14,11 +14,13 @@
   }
 
   function send() {
-    socket.emit("chat_message", {
-      username: $username,
-      message
-    });
-    message = "";
+    if (message !== "") {
+      socket.emit("chat_message", {
+        username: $username,
+        message
+      });
+      message = "";
+    }
   }
 </script>
 
@@ -26,7 +28,8 @@
   main {
     display: flex;
     flex-flow: column;
-    height: 100%;
+    height: calc(100% - 40px);
+    padding: 20px;
   }
 
   .chatlog {
@@ -35,7 +38,8 @@
   }
 
   .input {
-    margin: 20px 10px;
+    display: flex;
+    margin-top: 20px;
   }
 </style>
 
@@ -48,6 +52,6 @@
       bind:value={message}
       on:onKeyDown={onKeyDown}
       placeholder="Type here" />
-    <Button on:onClick={send} btnText="SEND" />
+    <Button margin="0 0 0 20px" on:onClick={send} btnText="SEND" />
   </div>
 </main>

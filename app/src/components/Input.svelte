@@ -14,6 +14,8 @@
 <style>
   input {
     padding: 20px;
+    width: 100%;
+    border: none;
   }
 
   input:focus {

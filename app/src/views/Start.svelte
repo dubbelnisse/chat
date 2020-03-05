@@ -26,9 +26,16 @@
     width: 100vw;
     height: 100vh;
   }
+
+  .input-wrapper {
+    display: flex;
+    max-width: 300px;
+  }
 </style>
 
 <main>
-  <Input bind:value={name} on:onKeyDown={onKeyDown} placeholder="Username" />
-  <Button on:onClick={submit} btnText="GO!" />
+  <div class="input-wrapper">
+    <Input bind:value={name} on:onKeyDown={onKeyDown} placeholder="Username" />
+    <Button margin="0 0 0 20px" on:onClick={submit} btnText="GO!" />
+  </div>
 </main>

@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
 
   export let btnText;
+  export let margin;
 
   const dispatch = createEventDispatcher();
 
@@ -18,4 +19,6 @@
   }
 </style>
 
-<button on:click|preventDefault={click}>{btnText}</button>
+<button style="margin: {margin}" on:click|preventDefault={click}>
+  {btnText}
+</button>
