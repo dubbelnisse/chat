@@ -15,6 +15,7 @@ app.get('/', (_, res) => {
 
 io.sockets.on('connection', socket => {
   socket.on('chat_message', message => {
+      message.time = new Date()
       io.emit('chat_message', message)
   })
 })
