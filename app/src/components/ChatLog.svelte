@@ -11,10 +11,6 @@
 </script>
 
 <style>
-  main {
-    background-color: #fff;
-  }
-
   ul {
     list-style: none;
     margin: 0;
@@ -28,5 +24,4 @@
       <Message {message} />
     {/each}
   </ul>
-
 </main>
