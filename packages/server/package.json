@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpileOnly ./lib/server.ts",
-    "prod": "tsc && node ./dist/server.js"
+    "prod": "tsc && node ./dist/server.js",
+    "build": "tsc",
+    "start": "node ./dist/server.js"
   },
   "author": "Nils Nilsson",
   "license": "ISC",
