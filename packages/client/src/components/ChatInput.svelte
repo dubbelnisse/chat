@@ -3,7 +3,7 @@
   import Button from "./Button.svelte";
   import Input from "./Input.svelte";
 
-  let socket = io.connect("http://localhost:9000");
+  let socket = io.connect(process.env.SOCKET_IO_URL);
   let message = "";
 
   function onKeyDown(event) {

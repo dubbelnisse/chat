@@ -4,14 +4,14 @@
 
 ### Start server
 ```
-cd server
+cd packages/server
 npm install
 npm run dev
 ```
 
-### Start app
+### Start client
 ```
-cd app
+cd packages/client
 npm install
 npm run dev
 ```
