@@ -3,6 +3,11 @@
   import moment from "moment";
 
   export let message;
+  let isGif = false;
+
+  if (message.message.toLowerCase().match(/\.(gif)/g)) {
+    isGif = true;
+  }
 </script>
 
 <style>
@@ -16,7 +21,11 @@
   }
 
   .inner {
-    max-width: 60%;
+    max-width: 80%;
+  }
+
+  img {
+    width: 100%;
   }
 
   .me {
@@ -52,14 +61,22 @@
 {#if message.username === $username}
   <li class="me">
     <div class="inner">
-      <div class="message message--me">{message.message}</div>
+      <div class="message message--me">
+        {#if isGif}
+          <img src={message.message} alt="GIF" />
+        {:else}{message.message}{/if}
+      </div>
       <div class="time">{moment(message.time).format('LT')}</div>
     </div>
   </li>
 {:else}
   <li class="other">
-    <div class="inne">
-      <div class="message message--other">{message.message}</div>
+    <div class="inner">
+      <div class="message message--other">
+        {#if isGif}
+          <img src={message.message} alt="GIF" />
+        {:else}{message.message}{/if}
+      </div>
       <div class="time">{moment(message.time).format('LT')}</div>
     </div>
   </li>
