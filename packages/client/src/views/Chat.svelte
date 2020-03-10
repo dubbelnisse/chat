@@ -11,10 +11,6 @@
     padding: 20px;
   }
 
-  .chatlog {
-    flex-grow: 1;
-  }
-
   .input {
     display: flex;
     margin-top: 20px;
@@ -22,9 +18,7 @@
 </style>
 
 <main>
-  <div class="chatlog">
-    <ChatLog />
-  </div>
+  <ChatLog />
   <div class="input">
     <ChatInput />
   </div>
