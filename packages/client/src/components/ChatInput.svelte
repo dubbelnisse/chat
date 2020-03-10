@@ -44,7 +44,8 @@
   <Input
     bind:value={message}
     on:onKeyDown={onKeyDown}
-    placeholder="Type something" />
+    placeholder="Type something"
+    focusOnMount={true} />
   <button on:click={send}>
     <i class="far fa-paper-plane" />
   </button>

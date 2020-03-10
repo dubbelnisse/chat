@@ -1,14 +1,23 @@
 <script>
+  import { onMount } from "svelte";
   import { createEventDispatcher } from "svelte";
 
   export let value;
   export let placeholder;
+  export let focusOnMount = false;
+  let input;
 
   const dispatch = createEventDispatcher();
 
   function keydown(event) {
     dispatch("onKeyDown", event);
   }
+
+  onMount(() => {
+    if (focusOnMount) {
+      input.focus();
+    }
+  });
 </script>
 
 <style>
@@ -24,4 +33,4 @@
   }
 </style>
 
-<input bind:value on:keydown={keydown} {placeholder} />
+<input bind:this={input} bind:value on:keydown={keydown} {placeholder} />
