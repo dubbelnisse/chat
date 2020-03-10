@@ -10,6 +10,10 @@
     {
       "src": "/",
       "dest": "lib/server.ts"
+    },
+    {
+      "src": "/socket.io/*",
+      "dest": "lib/server.ts"
     }
   ]
 }
