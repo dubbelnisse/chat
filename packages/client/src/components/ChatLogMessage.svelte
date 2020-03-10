@@ -77,7 +77,10 @@
           <img src={message.message} alt="GIF" />
         {:else}{message.message}{/if}
       </div>
-      <div class="time">{moment(message.time).format('LT')}</div>
+      <div class="time">
+        <strong>{message.username}</strong>
+        | {moment(message.time).format('LT')}
+      </div>
     </div>
   </li>
 {/if}
