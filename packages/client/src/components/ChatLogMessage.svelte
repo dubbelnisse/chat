@@ -1,5 +1,5 @@
 <script>
-  import { username } from "../stores/";
+  import { userid, username } from "../stores/";
   import moment from "moment";
 
   export let message;
@@ -17,7 +17,7 @@
   }
 
   li:not(:first-child) {
-    margin-top: 20px;
+    margin-top: 5px;
   }
 
   .inner {
@@ -56,9 +56,16 @@
     font-size: 13px;
     margin-top: 10px;
   }
+
+  .connection {
+    color: #999999;
+    font-size: 13px;
+    margins: 10px 0;
+    font-style: italic;
+  }
 </style>
 
-{#if message.username === $username}
+{#if message.userid === $userid}
   <li class="me">
     <div class="inner">
       <div class="message message--me">
@@ -69,6 +76,8 @@
       <div class="time">{moment(message.time).format('LT')}</div>
     </div>
   </li>
+{:else if message.type === 'CONNECTION'}
+  <li class="connection">{message.message}</li>
 {:else}
   <li class="other">
     <div class="inner">

@@ -14,10 +14,19 @@ app.get('/', (_, res) => {
 })
 
 io.sockets.on('connection', socket => {
+  socket.on('user_connected', user => {
+    user.time = new Date()
+    socket.broadcast.emit('user_connected', user)
+  })
+
   socket.on('chat_message', message => {
-      console.log('recived message!')
       message.time = new Date()
       io.emit('chat_message', message)
+  })
+
+  socket.on('user_disconnected', user => {
+    user.time = new Date()
+    io.emit('user_disconnected', user)
   })
 })
 

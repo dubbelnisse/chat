@@ -1,11 +1,25 @@
 <script>
   import Message from "./ChatLogMessage.svelte";
+  import { socket } from "../helpers/socketio";
+  import { userid } from "../stores/";
 
-  let socket = io.connect(process.env.SOCKET_IO_URL);
   let messages = [];
   let logWrapper;
 
   socket.on("chat_message", serverMessage => {
+    serverMessage.type = "MESSAGE";
+    messages.push(serverMessage);
+    messages = messages;
+
+    // TODO: A hacky solution that needs a fix
+    setTimeout(() => {
+      logWrapper.scrollTop = logWrapper.scrollHeight;
+    }, 0);
+  });
+
+  socket.on("user_connected", serverMessage => {
+    serverMessage.type = "CONNECTION";
+    serverMessage.message = `${serverMessage.username} connected!`;
     messages.push(serverMessage);
     messages = messages;
 

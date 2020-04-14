@@ -20,3 +20,4 @@ const createWritableStore = (key, startValue) => {
 }
 
 export const username = createWritableStore('username', '');
+export const userid = createWritableStore('userid', '');

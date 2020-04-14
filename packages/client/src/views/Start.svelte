@@ -1,11 +1,13 @@
 <script>
-  import { username } from "../stores";
+  import { username, userid } from "../stores";
   import Button from "../components/Button.svelte";
   import Input from "../components/Input.svelte";
+  import { v4 as uuidv4 } from "uuid";
 
   let name = "";
 
   username.useLocalStorage();
+  userid.useLocalStorage();
 
   function onKeyDown(event) {
     if (event.detail.keyCode === 13 && name !== "") {
@@ -15,6 +17,7 @@
 
   function submit() {
     username.set(name);
+    userid.set(uuidv4());
   }
 </script>
 

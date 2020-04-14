@@ -1,0 +1,1 @@
+export const socket = io.connect(process.env.SOCKET_IO_URL)

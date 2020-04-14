@@ -1,9 +1,9 @@
 <script>
-  import { username } from "../stores";
+  import { userid, username } from "../stores";
   import Button from "./Button.svelte";
   import Input from "./Input.svelte";
+  import { socket } from "../helpers/socketio";
 
-  let socket = io.connect(process.env.SOCKET_IO_URL);
   let message = "";
 
   function onKeyDown(event) {
@@ -16,6 +16,7 @@
     if (message !== "") {
       socket.emit("chat_message", {
         username: $username,
+        userid: $userid,
         message
       });
       message = "";
