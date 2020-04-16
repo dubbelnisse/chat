@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Message } from '../__generated__/types'
 import styled from 'styled-components'
 import { format } from 'date-fns'
@@ -38,18 +38,31 @@ const Time = styled.div`
   margin-top: 10px;
 `
 
+const Gif = styled.img`
+  width: 100%;
+`
+
 interface ChatLogMessageProps {
   message: Message
 }
 
 const ChatLogMessage: React.FC<ChatLogMessageProps> = ({ message }) => {
   const [userId] = useState(localStorage.getItem('userId') || '')
+  const [isGif, updateIsGif] = useState(false)
+
+  useEffect(() => {
+    if (message.message.toLowerCase().match(/\.(gif)/g)) {
+      updateIsGif(true)
+    }
+  }, [message])
 
   if (userId === message.userId) {
     return (
       <Wrapper>
         <Inner>
-          <Msg>{message.message}</Msg>
+          <Msg>
+            {isGif ? <Gif src={message.message} alt="GIF" /> : message.message}
+          </Msg>
           <Time>{format(new Date(message.sent), 'H:mm a')}</Time>
         </Inner>
       </Wrapper>
@@ -59,7 +72,9 @@ const ChatLogMessage: React.FC<ChatLogMessageProps> = ({ message }) => {
   return (
     <WrapperOther>
       <Inner>
-        <MsgOther>{message.message}</MsgOther>
+        <MsgOther>
+          {isGif ? <Gif src={message.message} alt="GIF" /> : message.message}
+        </MsgOther>
         <Time>
           <strong>{message.name}</strong> |{' '}
           {format(new Date(message.sent), 'H:mm a')}
