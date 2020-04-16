@@ -8,7 +8,9 @@
   },
   "scripts": {
     "dev": "ts-node-dev --no-notify --ignore-watch node_modules lib/server.ts",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml",
+    "build": "tsc",
+    "start": "node ./build/lib/server.js"
   },
   "keywords": [
     "graphql",
