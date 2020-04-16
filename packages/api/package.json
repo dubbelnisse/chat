@@ -17,6 +17,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@iteam/config": "^12.1.0",
     "@types/uuid": "^7.0.2",
     "apollo-server-express": "2.9.6",
     "express": "4.17.1",

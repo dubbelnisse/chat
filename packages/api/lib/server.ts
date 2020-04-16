@@ -7,6 +7,7 @@ import {
 import merge from 'lodash.merge'
 import { Message } from './__generated__/graphql'
 import http from 'http'
+import config from './config'
 
 export const pubsub = new PubSub()
 
@@ -43,6 +44,8 @@ server.applyMiddleware({ app })
 const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
 
-httpServer.listen({ port: 4000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+httpServer.listen({ port: config.port }, () =>
+  console.log(
+    `🚀 Server ready at http://localhost:${config.port}${server.graphqlPath}`
+  )
 )
