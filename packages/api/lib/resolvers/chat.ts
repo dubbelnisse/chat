@@ -47,7 +47,6 @@ export const resolvers: Resolvers = {
   Query: {
     history: () => messages,
   },
-
   Mutation: {
     addMessage: (_, { input }) => {
       const newInput = {
@@ -67,7 +66,6 @@ export const resolvers: Resolvers = {
       return messages
     },
   },
-
   Subscription: {
     messageAdded: {
       subscribe: () => pubsub.asyncIterator([MESSAGE_ADDED]),
