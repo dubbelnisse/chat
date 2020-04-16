@@ -76,6 +76,7 @@ const ChatInput: React.FC = () => {
           <Form onSubmit={handleSubmit}>
             <Input
               name="message"
+              type="text"
               onChange={handleChange}
               placeholder="Type something"
               value={values.message}

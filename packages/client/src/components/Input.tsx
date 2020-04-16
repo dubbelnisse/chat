@@ -17,6 +17,7 @@ interface InputProps {
   onChange: (e: any) => void
   placeholder: string
   value: string
+  type: string
 }
 
 const Input: React.FC<InputProps> = ({
@@ -24,11 +25,12 @@ const Input: React.FC<InputProps> = ({
   onChange,
   placeholder,
   value,
+  type,
 }) => {
   return (
     <InputElement
       name={name}
-      type="text"
+      type={type}
       onChange={onChange}
       placeholder={placeholder}
       value={value}

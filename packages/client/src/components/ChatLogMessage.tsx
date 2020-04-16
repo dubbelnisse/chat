@@ -5,11 +5,11 @@ import { format } from 'date-fns'
 
 const Wrapper = styled.li`
   display: flex;
-  font-size: 20px;
+  font-size: 15px;
   justify-content: flex-end;
 
   &:not(:first-child) {
-    margin-top: 5px;
+    margin-top: 10px;
   }
 `
 
@@ -22,7 +22,6 @@ const Inner = styled.div`
 `
 
 const Msg = styled.div`
-  font-size: 20px;
   padding: 20px;
   background-color: #fef8e6;
   border-radius: 20px 20px 3px 20px;

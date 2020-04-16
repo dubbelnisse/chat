@@ -43,6 +43,7 @@ const Start: React.FC = () => {
           <InputForm onSubmit={handleSubmit}>
             <Input
               name="name"
+              type="text"
               onChange={handleChange}
               placeholder="Username"
               value={values.name}
