@@ -42,11 +42,33 @@ const Gif = styled.img`
   width: 100%;
 `
 
+const HistoryWrapper = styled.div`
+  justify-content: flex-start;
+
+  &:not(:first-child) {
+    margin-top: 10px;
+  }
+`
+
+const Meta = styled.span`
+  color: rgb(180, 180, 180);
+  margin-right: 10px;
+`
+
+const HistoryMsg = styled.span`
+  color: rgb(190, 190, 190);
+  margin-right: 10px;
+`
+
 interface ChatLogMessageProps {
   message: Message
+  history?: boolean
 }
 
-const ChatLogMessage: React.FC<ChatLogMessageProps> = ({ message }) => {
+const ChatLogMessage: React.FC<ChatLogMessageProps> = ({
+  message,
+  history,
+}) => {
   const [userId] = useState(localStorage.getItem('userId') || '')
   const [isGif, updateIsGif] = useState(false)
 
@@ -55,6 +77,18 @@ const ChatLogMessage: React.FC<ChatLogMessageProps> = ({ message }) => {
       updateIsGif(true)
     }
   }, [message])
+
+  if (history) {
+    return (
+      <HistoryWrapper>
+        <Meta>
+          <strong>{message.name}</strong> |{' '}
+          {format(new Date(message.sent), 'H:mm a')}
+        </Meta>
+        <HistoryMsg>{message.message}</HistoryMsg>
+      </HistoryWrapper>
+    )
+  }
 
   if (userId === message.userId) {
     return (

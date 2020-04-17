@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { gql, useSubscription } from '@apollo/client'
+import { gql, useSubscription, useQuery } from '@apollo/client'
 import { Message, MessagesSubscription } from '../__generated__/types'
 import styled from 'styled-components'
 import ChatLogMessage from './ChatLogMessage'
@@ -27,6 +27,18 @@ const MESSAGES_SUBSCRIPTION = gql`
   }
 `
 
+const GET_HISTORY = gql`
+  query history {
+    history {
+      message
+      name
+      userId
+      id
+      sent
+    }
+  }
+`
+
 const ChatLog: React.FC = () => {
   const logWrapper = useRef<HTMLDivElement | null>(null)
   const [chatLog, updateChatLog] = useState<Message[]>([])
@@ -40,6 +52,7 @@ const ChatLog: React.FC = () => {
       },
     }
   )
+  const { data, error: historyError } = useQuery(GET_HISTORY)
 
   useEffect(() => {
     const node = logWrapper.current
@@ -48,13 +61,21 @@ const ChatLog: React.FC = () => {
     }
   }, [chatLog])
 
-  if (error) {
+  if (error || historyError) {
     return <div>Error</div>
   }
 
   return (
     <Wrapper ref={logWrapper}>
       <List>
+        {data &&
+          data.history.map((message: Message, i: Number) => (
+            <ChatLogMessage
+              key={`history-message-${i}`}
+              history
+              message={message}
+            />
+          ))}
         {chatLog.map((message: Message, i: Number) => (
           <ChatLogMessage key={`message-${i}`} message={message} />
         ))}
