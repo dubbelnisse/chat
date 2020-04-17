@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express'
-import { messages, pubsub } from '../server'
+import { messages, users, pubsub } from '../server'
 import {
   QueryResolvers,
   MutationResolvers,
@@ -18,14 +18,25 @@ export const typeDefs = gql`
     sent: DateTime!
   }
 
+  type User {
+    userId: String!
+    name: String!
+  }
+
   input MessageInput {
     userId: String!
     name: String!
     message: String!
   }
 
+  input SubscriptionInput {
+    userId: String!
+    name: String!
+  }
+
   extend type Query {
     history: [Message!]!
+    users: [User!]!
   }
 
   extend type Mutation {
@@ -33,7 +44,7 @@ export const typeDefs = gql`
   }
 
   extend type Subscription {
-    messageAdded: Message!
+    messageAdded(input: SubscriptionInput!): Message!
   }
 `
 
@@ -46,6 +57,7 @@ interface Resolvers {
 export const resolvers: Resolvers = {
   Query: {
     history: () => messages,
+    users: () => users,
   },
   Mutation: {
     addMessage: (_, { input }) => {
@@ -68,7 +80,16 @@ export const resolvers: Resolvers = {
   },
   Subscription: {
     messageAdded: {
-      subscribe: () => pubsub.asyncIterator([MESSAGE_ADDED]),
+      subscribe: (_, { input }) => {
+        if (!users.some((user) => user.userId === input.userId)) {
+          users.push({
+            name: input.name,
+            userId: input.userId,
+          })
+        }
+
+        return pubsub.asyncIterator([MESSAGE_ADDED])
+      },
     },
   },
 }

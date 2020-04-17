@@ -5,13 +5,14 @@ import {
   resolvers as chatResolvers,
 } from './resolvers/chat'
 import merge from 'lodash.merge'
-import { Message } from './__generated__/graphql'
+import { Message, User } from './__generated__/graphql'
 import http from 'http'
 import config from './config'
 
 export const pubsub = new PubSub()
 
 export const messages: Message[] = []
+export const users: User[] = []
 
 const typeDefs = gql`
   """
