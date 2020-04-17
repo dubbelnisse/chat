@@ -1,64 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Message } from '../__generated__/types'
-import styled from 'styled-components'
-import { format } from 'date-fns'
-
-const Wrapper = styled.li`
-  display: flex;
-  font-size: 15px;
-  justify-content: flex-end;
-
-  &:not(:first-child) {
-    margin-top: 10px;
-  }
-`
-
-const WrapperOther = styled(Wrapper)`
-  justify-content: flex-start;
-`
-
-const Inner = styled.div`
-  max-width: 80%;
-`
-
-const Msg = styled.div`
-  padding: 20px;
-  background-color: #fef8e6;
-  border-radius: 20px 20px 3px 20px;
-`
-
-const MsgOther = styled(Msg)`
-  background-color: #e8f4f9;
-  border-radius: 20px 20px 20px 3px;
-`
-
-const Time = styled.div`
-  color: #999999;
-  font-size: 13px;
-  margin-top: 10px;
-`
-
-const Gif = styled.img`
-  width: 100%;
-`
-
-const HistoryWrapper = styled.div`
-  justify-content: flex-start;
-
-  &:not(:first-child) {
-    margin-top: 10px;
-  }
-`
-
-const Meta = styled.span`
-  color: rgb(180, 180, 180);
-  margin-right: 10px;
-`
-
-const HistoryMsg = styled.span`
-  color: rgb(190, 190, 190);
-  margin-right: 10px;
-`
+import HistoryMessage from './Messages/HistoryMessage'
+import IncomingMessage from './Messages/IncomingMessage'
+import OutgoingMessage from './Messages/OutgoingMessage'
 
 interface ChatLogMessageProps {
   message: Message
@@ -79,43 +23,14 @@ const ChatLogMessage: React.FC<ChatLogMessageProps> = ({
   }, [message])
 
   if (history) {
-    return (
-      <HistoryWrapper>
-        <Meta>
-          <strong>{message.name}</strong> |{' '}
-          {format(new Date(message.sent), 'H:mm a')}
-        </Meta>
-        <HistoryMsg>{message.message}</HistoryMsg>
-      </HistoryWrapper>
-    )
+    return <HistoryMessage message={message} />
   }
 
   if (userId === message.userId) {
-    return (
-      <Wrapper>
-        <Inner>
-          <Msg>
-            {isGif ? <Gif src={message.message} alt="GIF" /> : message.message}
-          </Msg>
-          <Time>{format(new Date(message.sent), 'H:mm a')}</Time>
-        </Inner>
-      </Wrapper>
-    )
+    return <OutgoingMessage message={message} isGif={isGif} />
   }
 
-  return (
-    <WrapperOther>
-      <Inner>
-        <MsgOther>
-          {isGif ? <Gif src={message.message} alt="GIF" /> : message.message}
-        </MsgOther>
-        <Time>
-          <strong>{message.name}</strong> |{' '}
-          {format(new Date(message.sent), 'H:mm a')}
-        </Time>
-      </Inner>
-    </WrapperOther>
-  )
+  return <IncomingMessage message={message} isGif={isGif} />
 }
 
 export default ChatLogMessage

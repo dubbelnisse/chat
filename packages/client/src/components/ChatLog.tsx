@@ -52,7 +52,7 @@ const ChatLog: React.FC = () => {
       },
     }
   )
-  const { data, error: historyError } = useQuery(GET_HISTORY)
+  const { data: historyData, error: historyError } = useQuery(GET_HISTORY)
 
   useEffect(() => {
     const node = logWrapper.current
@@ -68,8 +68,8 @@ const ChatLog: React.FC = () => {
   return (
     <Wrapper ref={logWrapper}>
       <List>
-        {data &&
-          data.history.map((message: Message, i: Number) => (
+        {historyData &&
+          historyData.history.map((message: Message, i: Number) => (
             <ChatLogMessage
               key={`history-message-${i}`}
               history
