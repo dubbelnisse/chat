@@ -16,8 +16,8 @@ const List = styled.ul`
 `
 
 const MESSAGES_SUBSCRIPTION = gql`
-  subscription messages {
-    messageAdded {
+  subscription messages($input: SubscriptionInput!) {
+    messageAdded(input: $input) {
       message
       name
       userId
@@ -40,11 +40,19 @@ const GET_HISTORY = gql`
 `
 
 const ChatLog: React.FC = () => {
+  const name = localStorage.getItem('username') || ''
+  const userId = localStorage.getItem('userId') || ''
   const logWrapper = useRef<HTMLDivElement | null>(null)
   const [chatLog, updateChatLog] = useState<Message[]>([])
   const { error } = useSubscription<MessagesSubscription>(
     MESSAGES_SUBSCRIPTION,
     {
+      variables: {
+        input: {
+          userId,
+          name,
+        },
+      },
       onSubscriptionData: ({ subscriptionData }) => {
         if (subscriptionData.data?.messageAdded) {
           updateChatLog([...chatLog, subscriptionData.data.messageAdded])
