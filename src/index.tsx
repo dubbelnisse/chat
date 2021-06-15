@@ -4,8 +4,11 @@ import App from './routes/App'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Pusher from 'pusher-js'
 
-export const pusher = new Pusher('07308c3f15524abb4ac3', {
-  cluster: 'eu',
+const { REACT_APP_PUSHER_KEY: key, REACT_APP_PUSHER_CLUSTER: cluster } =
+  process.env
+
+export const pusher = new Pusher(key || '', {
+  cluster: cluster || '',
 })
 export const channel = pusher.subscribe('chat-channel')
 

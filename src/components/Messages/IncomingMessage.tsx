@@ -39,7 +39,6 @@ interface ChatLogMessageProps {
 }
 
 const IncomingMessage: React.FC<ChatLogMessageProps> = ({ message, isGif }) => {
-  console.log(message)
   return (
     <Wrapper>
       <Inner>

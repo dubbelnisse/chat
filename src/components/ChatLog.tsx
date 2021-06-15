@@ -26,7 +26,6 @@ const ChatLog: React.FC = () => {
 
   useEffect(() => {
     channel.bind('message-event', (data: Message) => {
-      console.log('BIND', messages, [...messages, data])
       const newMessages = [...messages, data]
       setMessages(newMessages)
     })

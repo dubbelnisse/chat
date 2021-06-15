@@ -41,7 +41,7 @@ const ChatInput: React.FC = () => {
           const name = localStorage.getItem('username') || ''
           const userId = localStorage.getItem('userId') || ''
 
-          await fetch('https://chat-api.nisse.dev/api/send', {
+          await fetch('/api/send', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
