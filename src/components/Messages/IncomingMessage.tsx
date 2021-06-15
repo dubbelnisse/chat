@@ -1,5 +1,5 @@
 import React from 'react'
-import { Message } from '../../__generated__/types'
+import { Message } from '../ChatLog'
 import styled from 'styled-components'
 import { format } from 'date-fns'
 

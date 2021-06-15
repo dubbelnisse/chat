@@ -1,22 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { gql, useMutation } from '@apollo/client'
 import { Formik } from 'formik'
-import {
-  MessagesSubscription,
-  MutationAddMessageArgs,
-} from '../__generated__/types'
 import * as Yup from 'yup'
 import Input from '../components/Input'
-
-const ADD_MESSAGE = gql`
-  mutation AddMessage($input: MessageInput!) {
-    addMessage(input: $input) {
-      name
-      sent
-    }
-  }
-`
 
 const Wrapper = styled.div`
   display: flex;
@@ -46,29 +32,27 @@ const MessageSchema = Yup.object().shape({
 })
 
 const ChatInput: React.FC = () => {
-  const [sendMessage] = useMutation<
-    MessagesSubscription,
-    MutationAddMessageArgs
-  >(ADD_MESSAGE)
-
   return (
     <Wrapper>
       <Formik
         initialValues={{ message: '' }}
         validationSchema={MessageSchema}
-        onSubmit={({ message }, form) => {
+        onSubmit={async ({ message }, form) => {
           const name = localStorage.getItem('username') || ''
           const userId = localStorage.getItem('userId') || ''
 
-          sendMessage({
-            variables: {
-              input: {
-                userId,
-                name,
-                message,
-              },
+          await fetch('/api/send', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+              name,
+              userId,
+              message,
+            }),
           })
+
           form.resetForm()
         }}
       >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Message } from '../__generated__/types'
+import { Message } from './ChatLog'
 import HistoryMessage from './Messages/HistoryMessage'
 import IncomingMessage from './Messages/IncomingMessage'
 import OutgoingMessage from './Messages/OutgoingMessage'
