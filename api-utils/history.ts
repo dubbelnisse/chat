@@ -1,24 +1,10 @@
-import fs from 'fs'
-import { promisify } from 'util'
-import { join } from 'path'
+import { get, keys, set, flushall } from '../api-adapters/redis'
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-const deleteFile = promisify(fs.unlink)
-const fileName = join('/tmp', '/history.json')
-
-export const addToHistory = async (message) => {
+export const addToHistory = async (message: any) => {
   try {
-    if (fs.existsSync('/tmp/history.json')) {
-      const savedData = await readFile(fileName, 'utf8')
-      const parsedSavedData = JSON.parse(savedData)
+    const key = `message-${Math.floor(Math.random() * 10000)}`
 
-      await writeFile(fileName, JSON.stringify([...parsedSavedData, message]))
-    } else {
-      const data = JSON.stringify([message])
-
-      await writeFile(fileName, data)
-    }
+    await set(key, JSON.stringify(message))
   } catch (error) {
     console.log(error)
     return error
@@ -27,9 +13,16 @@ export const addToHistory = async (message) => {
 
 export const getHistory = async () => {
   try {
-    if (fs.existsSync('/tmp/history.json')) {
-      const store = await readFile(fileName, 'utf8')
-      return JSON.parse(store)
+    const redisKeys = await keys('message-*')
+
+    if (redisKeys.length > 0) {
+      return Promise.all(
+        redisKeys.map(async (messageKey: any) => {
+          const data = await get(messageKey)
+
+          return JSON.parse(data || '{}')
+        })
+      )
     }
 
     return []
@@ -41,7 +34,7 @@ export const getHistory = async () => {
 
 export const clearHistory = async () => {
   try {
-    await deleteFile(fileName)
+    await flushall()
   } catch (error) {
     console.log(error)
     return error
