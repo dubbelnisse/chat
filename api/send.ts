@@ -1,4 +1,5 @@
 import Pusher from 'pusher'
+import { addToHistory } from './utils/history'
 
 const {
   APP_ID: appId,
@@ -18,20 +19,18 @@ module.exports = async (req: any, res: any) => {
   const { userId, message, name } = req.body
   const sent = new Date()
 
-  try {
-    await pusher.trigger("chat-channel", "message-event", {
-      userId,
-      message,
-      name,
-      sent
-    })
+  const newMessage = {
+    userId,
+    message,
+    name,
+    sent,
+  }
 
-    res.send({
-      userId,
-      message,
-      name,
-      sent
-    })
+  try {
+    await pusher.trigger('chat-channel', 'message-event', newMessage)
+    await addToHistory(newMessage)
+
+    res.send(newMessage)
   } catch (e) {
     console.log(e.message)
   }
