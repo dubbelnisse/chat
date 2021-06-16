@@ -1,5 +1,5 @@
 import Pusher from 'pusher'
-import { addToHistory } from './utils/history'
+import { addToHistory } from '../api-utils/history'
 
 const {
   APP_ID: appId,
@@ -31,7 +31,7 @@ module.exports = async (req: any, res: any) => {
     await addToHistory(newMessage)
 
     res.send(newMessage)
-  } catch (e) {
-    console.log(e.message)
+  } catch (error) {
+    console.log(error)
   }
 }

@@ -1,11 +1,11 @@
-import { getHistory } from './utils/history'
+import { getHistory } from '../api-utils/history'
 
 module.exports = async (_req: any, res: any) => {
   try {
     const history = await getHistory()
 
     res.send(history)
-  } catch (e) {
-    console.log(e.message)
+  } catch (error) {
+    console.log(error)
   }
 }
