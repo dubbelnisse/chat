@@ -4,5 +4,10 @@
       "memory": 1024,
       "maxDuration": 10
     }
-  }
+  },
+  "routes": [
+    { "src": "/api/send",  "methods": ["POST"], "dest": "/api/send.ts" },
+    { "src": "/api/history", "methods": ["GET"], "dest": "/api/history.ts" },
+    { "src": "/api/history", "methods": ["DELETE"], "dest": "/api/history-delete.ts" }
+  ]
 }
