@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 import ChatLogMessage from './ChatLogMessage'
 import { channel } from '../index'
 
@@ -23,8 +24,10 @@ const List = styled.ul`
 
 const ChatLog: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([])
+  const [history, setHistory] = useState<Message[]>([])
 
   useEffect(() => {
+    console.log('effekt1')
     channel.bind('message-event', (data: Message) => {
       const newMessages = [...messages, data]
       setMessages(newMessages)
@@ -35,9 +38,22 @@ const ChatLog: React.FC = () => {
     }
   })
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios('/api/history')
+
+      setHistory(result.data)
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <Wrapper>
       <List>
+        {history.map((message: Message, i: Number) => (
+          <ChatLogMessage key={`message-${i}`} history message={message} />
+        ))}
         {messages.map((message: Message, i: Number) => (
           <ChatLogMessage key={`message-${i}`} message={message} />
         ))}
