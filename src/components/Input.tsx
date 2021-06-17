@@ -29,6 +29,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <InputElement
+      autoComplete="off"
       name={name}
       type={type}
       onChange={onChange}

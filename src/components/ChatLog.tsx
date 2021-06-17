@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import ScrollableFeed from 'react-scrollable-feed'
 import ChatLogMessage from './ChatLogMessage'
 import { channel } from '../index'
 
@@ -14,12 +15,9 @@ export interface Message {
 const Wrapper = styled.div`
   flex-grow: 1;
   overflow: auto;
-`
-
-const List = styled.ul`
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `
 
 const ChatLog: React.FC = () => {
@@ -27,7 +25,6 @@ const ChatLog: React.FC = () => {
   const [history, setHistory] = useState<Message[]>([])
 
   useEffect(() => {
-    console.log('effekt1')
     channel.bind('message-event', (data: Message) => {
       const newMessages = [...messages, data]
       setMessages(newMessages)
@@ -50,14 +47,14 @@ const ChatLog: React.FC = () => {
 
   return (
     <Wrapper>
-      <List>
+      <ScrollableFeed>
         {history.map((message: Message, i: Number) => (
           <ChatLogMessage key={`message-${i}`} history message={message} />
         ))}
         {messages.map((message: Message, i: Number) => (
           <ChatLogMessage key={`message-${i}`} message={message} />
         ))}
-      </List>
+      </ScrollableFeed>
     </Wrapper>
   )
 }
