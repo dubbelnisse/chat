@@ -32,7 +32,7 @@ const HistoryMessage: React.FC<ChatLogMessageProps> = ({ message }) => {
         <strong>{message.name}</strong> |{' '}
         {format(new Date(message.sent), 'H:mm a')}
       </Meta>
-      <Msg>in {message.message}</Msg>
+      <Msg>{message.message}</Msg>
     </Wrapper>
   )
 }
