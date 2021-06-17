@@ -7,7 +7,7 @@ module.exports = async (_req: any, res: any) => {
     res.send(
       history.sort(
         (a: any, b: any) =>
-          new Date(b.sent).valueOf() - new Date(a.sent).valueOf()
+          new Date(a.sent).valueOf() - new Date(b.sent).valueOf()
       )
     )
   } catch (error) {
