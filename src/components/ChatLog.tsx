@@ -4,6 +4,7 @@ import axios from 'axios'
 import ScrollableFeed from 'react-scrollable-feed'
 import ChatLogMessage from './ChatLogMessage'
 import { channel } from '../index'
+import { useTabNotification } from '../hooks/useTabNotification'
 
 export interface Message {
   userId: string
@@ -23,10 +24,12 @@ const Wrapper = styled.div`
 const ChatLog: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([])
   const [history, setHistory] = useState<Message[]>([])
+  const addNotification = useTabNotification()
 
   useEffect(() => {
     channel.bind('message-event', (data: Message) => {
       const newMessages = [...messages, data]
+      addNotification()
       setMessages(newMessages)
     })
 
