@@ -4,13 +4,15 @@ module.exports = async (_req: any, res: any) => {
   try {
     const history = await getHistory()
 
+    console.log(history)
+
     res.send(
       history
-        .slice(0, 5)
         .sort(
           (a: any, b: any) =>
             new Date(a.sent).valueOf() - new Date(b.sent).valueOf()
         )
+        .slice(-5)
     )
   } catch (error) {
     console.log(error)
