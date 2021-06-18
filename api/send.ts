@@ -1,5 +1,6 @@
 import Pusher from 'pusher'
 import { addToHistory } from '../api-utils/history'
+import { v4 as uuidv4 } from 'uuid'
 
 const {
   APP_ID: appId,
@@ -18,8 +19,10 @@ const pusher = new Pusher({
 module.exports = async (req: any, res: any) => {
   const { userId, message, name } = req.body
   const sent = new Date()
+  const id = uuidv4()
 
   const newMessage = {
+    id,
     userId,
     message,
     name,
