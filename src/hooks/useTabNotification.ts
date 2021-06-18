@@ -10,6 +10,7 @@ export const useTabNotification = () => {
 
       if (document.hidden === false) {
         document.title = 'Chat'
+        setNotifications(0)
       }
     }
 
