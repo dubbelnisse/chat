@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const useTabNotification = () => {
-  const [notifications, setNotifications] = React.useState(1)
+  const [notifications, setNotifications] = React.useState(0)
   const [pageIsInView, setPageIsInView] = React.useState(true)
 
   React.useEffect(() => {
