@@ -4,7 +4,7 @@ export const addToHistory = async (message: any) => {
   try {
     const key = `message-${Math.floor(Math.random() * 10000)}`
 
-    await set(key, JSON.stringify(message))
+    await set(key, JSON.stringify(message), 'EX', 28800) //8h
   } catch (error) {
     console.log(error)
     return error
