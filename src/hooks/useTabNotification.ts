@@ -26,7 +26,7 @@ export const useTabNotification = () => {
   }, [notifications])
 
   const addNotification = () => {
-    if (!pageIsInView && notifications) {
+    if (!pageIsInView) {
       setNotifications(notifications + 1)
     }
   }
